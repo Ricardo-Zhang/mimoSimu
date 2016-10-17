@@ -7,7 +7,7 @@ UserNum = 3;
 
 %--------------------------
 dBNoiPwr= -20:1:10;      %SNR range, in dB; the definition of SNR is symbol power divided by noise power
-Ntrials=1e2;     %no. of channel realizations
+Ntrials=1e3;     %no. of channel realizations
 Tn=6;            %control the block length: 1,...,110
 Tframe = 10; % fixed frame duration: 10ms
 Tcp = 4.7e-3; % Normal cp time 4.7us
