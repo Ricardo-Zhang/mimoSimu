@@ -1,0 +1,11 @@
+clear;
+clc;
+close;
+for i = 1:10000
+    H = randn(2,2);
+    Ph = sqrt(1/2)*abs(H);
+end
+mean(H(1,1))
+mean(H(1,2))
+mean(H(1,3))
+mean(H
