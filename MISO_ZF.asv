@@ -6,7 +6,7 @@ AttenTx = 2;
 UserNum = 2;
 
 %--------------------------
-dBNoiPwr= -20:0.5:10;      %SNR range, in dB; the definition of SNR is symbol power divided by noise power
+dBNoiPwr= -20:1:10;      %SNR range, in dB; the definition of SNR is symbol power divided by noise power
 Ntrials=1e3;     %no. of channel realizations
 Tn=6;            %control the block length: 1,...,110
 Tframe = 10; % fixed frame duration: 10ms
@@ -30,7 +30,6 @@ wb= waitbar(0);
 t1=clock;
 
 for ntrials = 1:Ntrials    
-    %Channel and Beamformer Init
     H = sqrt(1/2)*(randn(UserNum, AttenTx) + 1i*randn(UserNum, AttenTx)); % channel model, noiseless
     W = H'*inv(H*H');
     W = W / sqrt(trace(W*W'));
@@ -54,20 +53,17 @@ for ntrials = 1:Ntrials
         end
     end
     Pwf = (Pwf1+Pwf0)/2;
-    for user = 1:UserNum
-        W(:,user) = W(:,user)*sqrt(P(user));
-    end
-    
+    W(:,1) = W(:,1)*sqrt(P(1));
+    W(:,2) = W(:,2)*sqrt(P(2));
     for nNoise = 1:length(dBNoiPwr)
         %Wait Bar Update-----------------
         waitbar((length(dBNoiPwr)*(ntrials-1)+nNoise)/(Ntrials*length(dBNoiPwr)),wb);
         
         LTEParams=GetLTEParameters;     %get LTE parameters;
         
-        %Noise Init----------------------
+        %Channel Init----------------------
         v =(randn(T,UserNum)+1i*randn(T,UserNum))/sqrt(2);   % noise
         
-        %Coding and modulation---------------------
         Signal = TransmitInit(UserNum, H, W, NoiPwr(nNoise), LTEParams, Tn, T);
         
         %ZF-Precoding-----------------------
