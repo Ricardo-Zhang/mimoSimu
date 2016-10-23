@@ -7,7 +7,7 @@ UserNum = 2;
 
 %--------------------------
 dBNoiPwr= -20:0.5:10;      %SNR range, in dB; the definition of SNR is symbol power divided by noise power
-Ntrials=1e3;     %no. of channel realizations
+Ntrials=10;     %no. of channel realizations
 Tn=6;            %control the block length: 1,...,110
 Tframe = 10; % fixed frame duration: 10ms
 Tcp = 4.7e-3; % Normal cp time 4.7us
@@ -34,30 +34,8 @@ for ntrials = 1:Ntrials
     H = sqrt(1/2)*(randn(UserNum, AttenTx) + 1i*randn(UserNum, AttenTx)); % channel model, noiseless
     W = H'*inv(H*H');
     W = W / sqrt(trace(W*W'));
-    %Power Allocation - Water Filling----
-    P = zeros(1,UserNum);           %initial power allocation for all users
-    Pwf = UserNum;             %initial water filling power level
-    Pwf1 = UserNum;
-    Pwf0 = 0;
-    for cycle = 1:1000
-        for user = 1:UserNum
-            yi = 1/(norm(W(:,user),'fro')^2);
-            P(user) = max(Pwf*yi - 1,0);
-            Pn(user) = P(user)/yi;
-        end
-        if sum(Pn) > 1
-            Pwf1 = Pwf;
-            Pwf = (Pwf0+Pwf)/2;
-        else
-            Pwf0 = Pwf;
-            Pwf = (Pwf+Pwf1)/2;
-        end
-    end
-    Pwf = (Pwf1+Pwf0)/2;
-    for user = 1:UserNum
-        W(:,user) = W(:,user)*sqrt(P(user));
-    end
-    
+    %Power Allocation ----------------------
+    W = PowerAllo(UserNum,W,'WaterFilling');
     for nNoise = 1:length(dBNoiPwr)
         %Wait Bar Update-----------------
         waitbar((length(dBNoiPwr)*(ntrials-1)+nNoise)/(Ntrials*length(dBNoiPwr)),wb);
@@ -66,7 +44,7 @@ for ntrials = 1:Ntrials
         
         %Noise Init----------------------
         v =(randn(T,UserNum)+1i*randn(T,UserNum))/sqrt(2);   % noise
-        
+      
         %Coding and modulation---------------------
         Signal = TransmitInit(UserNum, H, W, NoiPwr(nNoise), LTEParams, Tn, T);
         
