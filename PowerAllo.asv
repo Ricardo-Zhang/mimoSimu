@@ -25,7 +25,8 @@ switch(AlloType)
         end        
     case 'EPS'
         for user = 1:UserNum
-            W(:,user) = W(:,user)/norm(W(:,user),'fro');
+            for Atten = 1:AttenTx
+                W(Atten,user) = W(Atten,user)/norm(W(:,user),'fro');
             W(:,user) = W(:,user)/sqrt(UserNum);
         end
     case 'Regularized'
