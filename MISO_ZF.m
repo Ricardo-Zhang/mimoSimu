@@ -3,7 +3,7 @@ clc;
 %execute make.m first to compile c files.
 
 AttenTx = 2;
-UserNum = 2;
+UserNum = 3;
 
 %--------------------------
 dBNoiPwr= -20:0.5:10;      %SNR range, in dB; the definition of SNR is symbol power divided by noise power
