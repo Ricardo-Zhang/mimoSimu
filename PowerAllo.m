@@ -1,7 +1,9 @@
 function W = PowerAllo(UserNum,W,AlloType) 
 switch(AlloType)
     case 'WaterFilling'
-        W = W / sqrt(trace(W*W'));    
+        for user = 1:UserNum
+            W(:,user) = W(:,user)/norm(W(:,user),'fro');    
+        end
         P = zeros(1,UserNum);           %initial power allocation for all users
         Pwf = UserNum;             %initial water filling power level
         Pwf1 = UserNum;
@@ -30,5 +32,5 @@ switch(AlloType)
         end
     case 'Regularized'
         W = W / sqrt(trace(W*W'));
-end       
+    end       
 end
