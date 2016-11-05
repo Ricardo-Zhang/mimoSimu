@@ -2,11 +2,11 @@ clear;
 clc;
 %execute make.m first to compile c files.
 
-AttenTx = 2;
-UserNum = 2;
+AttenTx = 3;
+UserNum = 3;
 
 %--------------------------
-dBNoiPwr= -20:0.5:10;      %SNR range, in dB; the definition of SNR is symbol power divided by noise power
+dBNoiPwr= -20:1:10;      %SNR range, in dB; the definition of SNR is symbol power divided by noise power
 Ntrials=1e3;     %no. of channel realizations
 Tn=6;            %control the block length: 1,...,110
 Tframe = 10; % fixed frame duration: 10ms
@@ -34,7 +34,7 @@ for ntrials = 1:Ntrials
     H = sqrt(1/2)*(randn(UserNum, AttenTx) + 1i*randn(UserNum, AttenTx)); % channel model, noiseless
     W = H'*inv(H*H');
     %Power Allocation ----------------------
-    W = PowerAllo(UserNum,W,'EPS');
+    W = PowerAllo(UserNum,W,'WaterFilling');
     for nNoise = 1:length(dBNoiPwr)
         %Wait Bar Update-----------------
         waitbar((length(dBNoiPwr)*(ntrials-1)+nNoise)/(Ntrials*length(dBNoiPwr)),wb);
