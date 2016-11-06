@@ -119,14 +119,14 @@ and
 \]
 To fulfill the requirement of the beamformer, the multiplication of matrices \textbf{H} and \textbf{W} should be equal to an identity matrix.
 \[
-\textbf{WH} = \textbf{I}
+\textbf{H}_H\textbf{W} = \textbf{I}
 \]
 where I is the identity matrix.
 
 \noindent
 Solving this equation, the zero-forcing beamformer \textbf{W} would be the pseudo-inverse of the channel matrix \textbf{H}:
 \[
-\textbf{W} = \textbf{H}^{\dagger} = (\textbf{H}^H\textbf{H})^{-1}\textbf{H}
+\textbf{W} = \textbf{H}^{\dagger}
 \]
 
 \subsection{Power Allocation}
@@ -140,25 +140,27 @@ and the power-allocated beamformer for the \textit{k}th user could be expressed 
 \[\textbf{w}_k = \frac{\textbf{w}_k\sqrt{p_k}}{\lVert \textbf{w}_k \rVert_{F}}\]
 Three different power allocation methods are practiced in this system:
 the Normalized Scheme, the Equal Power Scaling Scheme and the Water Filling Scheme.
-\subsubsection{Normalized Scheme}
-In the normalized scheme, the initial beam former matrix is normalized by its Frobenius Norm:
+\subsubsection{Equal Receive Power Scaling Scheme}
+In the equal receive power scaling scheme, the initial beam former matrix is normalized by its Frobenius Norm:
 \[
 \textbf{W} = \frac{\textbf{W}}{\lVert \textbf{W} \rVert_{F}}
 \]
 The power allocated to the \textit{k}th user would be:
-\[p_k = \frac{\lVert \textbf{w}_k \rVert_{F}^2}{\lVert \textbf{W} \rVert_{F}^2}\]
+\[p_k = \frac{\lVert \textbf{w}_k \rVert_{2}^2}{\lVert \textbf{W} \rVert_{F}^2}\]
 This normalization process would simply rescale the whole matrix with a constant to fulfill the limitation.
+On the receivers' side, each user would be receiving same level of power under this scheme.
 
-\subsubsection{Equal Power Scaling Scheme}
-In the equal power scaling scheme, a uniform power is allocated to each user.
+\subsubsection{Equal Transmit Power Scaling Scheme}
+In the equal power scaling scheme, a uniform power is allocated to each user during transmission.
 \[p_k = \frac{P}{K}\]
 and the beamformer for each user become:
-\[\textbf{w}_k = \frac{\textbf{w}_k\sqrt{P}}{\lVert \textbf{w}_k \rVert_{F}\sqrt{K}}\]
+\[\textbf{w}_k = \frac{\textbf{w}_k\sqrt{P}}{\lVert \textbf{w}_k \rVert_{2}\sqrt{K}}\]
+
 \subsubsection{Water Filling Scheme}
 The water filling scheme is targeted to reach a maximum data rate for the whole group of users.
 The method would allocate more power to those with better channel state to boost their achievable rate while meeting the power constraint.
 Let the orignal beamformer gain to be $g_k$:
-\[g_k = \lVert \textbf{w}_k \rVert_{F}^2\]
+\[g_k = \lVert \textbf{w}_k \rVert_{2}^2\]
 The maximum capacity problem could be expressed as:
 \[
 \max \sum_{k=1}^{K} log(1+p_k)
@@ -168,12 +170,11 @@ with the limitation of
 Water filling method is efficient in solving this condition.
 Set the water filling power to be $\mu$ and the maximization problem would be further transformed
 to finding the maximum value of $\mu$ that satisfies:
-\[\sum_{k=1}^{K}(\mu-g_k)^+ \leq P\]
-where ${x}^+$ denotes max\{x,0\} \cite{TY1}.
+\[\sum_{k=1}^{K}p_k \leq P\]
+where the power allocated to the \textit{k}th user is:
+\[p_k = (\mu-g_k)^+\]
+ with $(x)^+$ denoting max\{x,0\} \cite{TY1}.
 
-\noindent
-Therefore, the power allocated to the \textit{k}th user would be:
-\[p_k = (\frac{\mu}{g_k}-1)^+ \]
 Iterative division method is applied to find the value of $\mu$ to maximize the achievable rate.
 
 \subsection{Simulation Platform}
@@ -192,7 +193,7 @@ A data stream of a block length is simulated for each user for transmission.
 Signal-to-Interference-and-Noise-Ratio for each user is then calculated to determine the modulation and coding scheme.
 The SINR for the \textit{k}th user is:
 \[
-SINR_k = \frac{Signal}{Interference+Noise} = \frac{\textbf{h}_k^H\textbf{w}_k}{\sum_{i = 1,i\neq k}^{i = K}\textbf{h}_k^H\textbf{w}_i+\sigma_k^2}
+SINR_k = \frac{P_{Signal}}{P_{Interference}+P_{Noise}} = \frac{\textbf{h}_k^H\textbf{w}_k\textbf{w}_k^H\textbf{h}_k}{\sum_{i = 1,i\neq k}^{i = K}\textbf{h}_k^H\textbf{w}_i\textbf{w}_i^H\textbf{h}_k+\sigma_k^2}
 \]
 where the $\textbf{w}_k$ is the beamformer for the \textit{k}th user with the power component multiplied.
 
@@ -238,11 +239,11 @@ The waterfilling power allocation method performs better in the total throughput
 However, the increase in total throughput is traded with the loss of throughput for users with poor channel state.
 
 \noindent
-The equal power scaling method outstands in equality for all user and has a relatively good performance comparing to the normalized method.
+The equal transmit power scaling method outstands in equality for all user and has a relatively good performance comparing to the normalized method.
 When the channel for all users is quite good, the performance of both the equal power scaling and waterfilling scheme would become quite similar.
 
 \noindent
-The normalization method would be the simplest in implementation. However, this advantage over the equal power scaling scheme is nearly ignorable.
+The equal receive power scaling method would be the simplest in implementation. However, this advantage over the equal power scaling scheme is nearly ignorable.
 
 \noindent
 The performance of the adaptive Single-Input-Single-Output(SISO) system is shown in figure 4. Comparing figure 3 and figure 4,
@@ -263,8 +264,8 @@ real-world multi-user scenarios.
 
 \noindent
 The water filling algorithm outstands in term of total throughput but fails to keep quality for users with poor channel state.
-The equal power scaling method would work well in good channel state and keep equality to all users when channel becomes poor.
-The Normalized scheme has a relatively poor performance comparing to the other two. The advantage in the simplicity is also small thus has little value in practice.
+The equal transmit power scaling method would work well in good channel state and keep equality to all users when channel becomes poor.
+The equal receive power scaling method has a relatively poor performance comparing to the other two. The advantage in the simplicity is also small thus is not widely used in practice.
 
 \bibliographystyle{plain}
 \bibliography{references}{}
