@@ -7,7 +7,7 @@
 \date{October 2016}
 
 \usepackage{graphicx}
-\usepackage[margin=1.5in]{geometry}
+\usepackage[margin=1.35in]{geometry}
 
 
 \begin{document}
@@ -157,15 +157,17 @@ and the beamformer for each user become:
 \subsubsection{Water Filling Scheme}
 The water filling scheme is targeted to reach a maximum data rate for the whole group of users.
 The method would allocate more power to those with better channel state to boost their achievable rate while meeting the power constraint.
-$$
-\max \sum_{n=1}^{N_U} log(1+p_n)
-$$
-with the limitation of
-$$\sum_{n=1}^{N_U} p_n \leq 1$$
-Water filling method is efficient in solving this condition.
-The water filling power is set to be $\mu$ and let the orignal beamformer gain to be $G_k$:
+Let the orignal beamformer gain to be $g_k$:
 \[g_k = \lVert \textbf{w}_k \rVert_{F}^2\]
-The maximization problem would be transformed to finding the maximum value of $\mu$ that satisfies:
+The maximum capacity problem could be expressed as:
+\[
+\max \sum_{k=1}^{K} log(1+p_k)
+\]
+with the limitation of
+\[\sum_{k=1}^{K} p_k \leq P\]
+Water filling method is efficient in solving this condition.
+Set the water filling power to be $\mu$ and the maximization problem would be further transformed
+to finding the maximum value of $\mu$ that satisfies:
 \[\sum_{k=1}^{K}(\mu-g_k)^+ \leq P\]
 where ${x}^+$ denotes max\{x,0\} \cite{TY1}.
 
@@ -196,7 +198,7 @@ where the $\textbf{w}_k$ is the beamformer for the \textit{k}th user with the po
 
 \noindent
 The SINR is converted into decimal scale and mapped to the corresponding CQI and MCS index values.
-$$SINR(dB)_k = 10*log_{10}(SINR)$$
+$$SINR(dB)_k = 10*log_{10}(SINR_k)$$
 With the specific modulation and coding scheme, a data stream of a block length is randomly generated for each user.
 All the data streams are converted into the signal sequences \textbf{s}
 and \textbf{s} for all users then pass through the beamformer and form the signal \textbf{x}.
@@ -216,8 +218,10 @@ where $L_{Bl}$ is the block length of the specific modulation and coding scheme 
 
 \noindent
 The achievable rate for the \textit{k}th user is calculated from the SINR values:
-$$AcRate_k = F*Bandwidth*log_2(1+SINR)$$
-\begin{center}(F : system loss of the OFDM)\end{center}
+$$AcRate_k = FB_wlog_2(1+SINR_k)$$
+where F denotes the system loss of the OFDM system, and $B_w$ stands for the bandwidth of the channel.
+
+\noindent
 The comparison between the total throughput and the total achievable rate for all users is conducted to evaluate the performance.
 The performance of the system applying the two power allocation schemes is shown in figure 3 (2-user-2-input-single-output system).
 
@@ -232,16 +236,20 @@ The performance of the system applying the two power allocation schemes is shown
 \noindent
 The waterfilling power allocation method performs better in the total throughput comparing to the other two algorithms.
 However, the increase in total throughput is traded with the loss of throughput for users with poor channel state.
-The EPS method outstands in equality for all user and has a relatively good performance comparing to the normalized method.
-When the channel for all users is quite good, the performance of both the EPS and waterfilling scheme would become quite similar.
-The normalization method would be the simplest in implementation. However, this advantage over the EPS scheme is nearly ignorable.
+
+\noindent
+The equal power scaling method outstands in equality for all user and has a relatively good performance comparing to the normalized method.
+When the channel for all users is quite good, the performance of both the equal power scaling and waterfilling scheme would become quite similar.
+
+\noindent
+The normalization method would be the simplest in implementation. However, this advantage over the equal power scaling scheme is nearly ignorable.
 
 \noindent
 The performance of the adaptive Single-Input-Single-Output(SISO) system is shown in figure 4. Comparing figure 3 and figure 4,
  performance is much boosted for the zero-forcing MU-MISO system comparing to the SISO system with both power allocation schemes.
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.25]{FadingSISO.png}
+\includegraphics[scale=0.4]{FadingSISO.png}
 \caption{SISO Performance}
 \label{fig:SISO}
 \end{figure}
@@ -255,7 +263,7 @@ real-world multi-user scenarios.
 
 \noindent
 The water filling algorithm outstands in term of total throughput but fails to keep quality for users with poor channel state.
-The EPS method would work well in good channel state and keep equality to all users when channel becomes poor.
+The equal power scaling method would work well in good channel state and keep equality to all users when channel becomes poor.
 The Normalized scheme has a relatively poor performance comparing to the other two. The advantage in the simplicity is also small thus has little value in practice.
 
 \bibliographystyle{plain}
