@@ -19,12 +19,12 @@ Currently, the multi-antenna technologies have been widely used in the modern co
 Therefore building up software simulation platforms for multi-antenna communication systems have received much attention.
 This report introduces the design of a simulation platform for
 the multi-user-multi-input-single-output (MU-MISO) communication system.
-Zero-forcing technology is applied for beam-forming and two different
+Zero-forcing technology is applied for beam-forming and three different
 power allocation algorithms are implemented and performance evaluations are conducted based on them.
 
 \section{System Model}
 \subsection{Overview}
-In this simulation platform, the communication system transmits signals via \textit{I} transmission antennas to support \textit{K} users.
+In this simulation platform, the communication system transmits signals via \textit{J} transmission antennas to support \textit{K} users.
 Each user is assigned with a single receive antenna. The scenario is modelled in Figure 1.
 \begin{figure}[ht]
 \centering
@@ -39,103 +39,121 @@ The data streams would be coded and modulated into the signal sequences.
 The sequences would be processed by the beam former to eliminate the inter-user interference.
 The processed sequence would be transmitted through the channel and the received signal of a user \textit{k} is modelled as:
 \subsection{Channel Model}
-The channel bewteen the $\textit{i}$th transmission antenna and the $\textit{k}$th user is modelled as a complex gain:
-\[H_{ki} = a+bj\]
-Therefore the channels between the base station and the users are modelled as a matrix of size $\textit{K}*\textit{I}$:
+The channel between the \textit{J} antennas and the \textit{k}th user is modelled as a column vector of length $\textit{J}$:
+\[
+\textbf{h}_k
+=
+\begin{bmatrix}
+    h_{1k} \\
+    h_{2k} \\
+    \vdots\\
+    h_{Jk}
+\end{bmatrix} \hspace{1cm}(k = 1,...,K)
+\]
+where $h_{jk}$ stands for an i.i.d. random variable subject to $C\mathcal{N}(0,1)$ which represents the channel from the \textit{j}th
+transmission antenna to the \textit{k}th user.
+
+\noindent
+The received signal for the \textit{k}th user could be derived as:
+\[
+\textbf{y}_k = \textbf{h}_k^H\textbf{x}+\textbf{n}_k \hspace{1cm}(k = 1,...,K)
+\]
+Where \textbf{x} is the beamformed sequence from the base station antennas,
+$\textbf{n}_k$ is the additive white Gaussian noise (AWGN) for the $\textit{k}$th user,
+and $\textbf{y}_k$ is the received signal for the $\textit{k}$th user.
+
+\subsection{Zero-Forcing Beam Former}
+The beam former is designed to eliminate the inter-user interference.
+To match with all the \textit{J} antennas in the base station,
+the beamformer for the \textit{k}th user would be modelled as a column vector:
+\[
+\textbf{w}_k
+=
+\begin{bmatrix}
+    \textbf{w}_{1k} \\
+    \textbf{w}_{2k} \\
+    \vdots \\
+    \textbf{w}_{Jk}
+\end{bmatrix} \hspace{1cm}(k = 1,...,K)
+\]
+Thus the processed signal sequence \textbf{x} could be derived as:
+\[
+\textbf{x} = \sum_{k=1}^{K}\textbf{w}_k\textbf{s}_k
+\]
+The received signal $\textbf{y}_k$ becomes:
+\[
+\begin{split}
+\textbf{y}_k = \textbf{h}_k^H\textbf{x}+\textbf{n}_k = \underbrace{
+\textbf{h}_k^H\textbf{w}_1\textbf{s}_1 +\textbf{h}_k^H\textbf{w}_2\textbf{s}_2+\textbf{h}_k^H\textbf{w}_3\textbf{s}_3
++\dots}_{interference}+\overbrace{\textbf{h}_k^H\textbf{w}_k\textbf{s}_k}^{signal}+
+\underbrace{\dots+\textbf{h}_k^H\textbf{h}_K\textbf{s}_K}_{interference} +\underbrace{\textbf{n}_k}_{noise} \\
+(k = 1,...,K)
+\end{split}
+\]
+The zero-forcing beamformer is designed to eliminate the inter-user interference completely,i.e.,to make the interference part in the received signal equal to 0.
+\[
+\textit{interference} = \sum_{i = 1,i\neq k}^{K}\textbf{h}_k^H\textbf{w}_{i}\textbf{s}_{i} = 0
+\]
+As $\textbf{s}_{i}$ is the signal sequence of user \textit{k'}, $\textbf{s}_{k'} \neq 0$, the following condition needs to be fulfilled to cancel out the interference:
+\[
+\textbf{h}_k^H\textbf{w}_{i} = 0 \hspace{1cm}(i \neq k)
+\]
+From the pespective of the whole system serving \textit{K} users, the vectors of channels and beamformers could be merged into
+two matrices \textbf{H} and \textbf{W}:
 \[
 \textbf{H}
 =
 \begin{bmatrix}
-    \textbf{H}_{11} & \textbf{H}_{12} & \textbf{H}_{13} & \dots  & \textbf{H}_{1I} \\
-    \textbf{H}_{21} & \textbf{H}_{22} & \textbf{H}_{23} & \dots  & \textbf{H}_{2I} \\
-    \vdots & \vdots & \vdots & \ddots & \vdots \\
-    \textbf{H}_{K1} & \textbf{H}_{K2} & \textbf{H}_{K3} & \dots  & \textbf{H}_{KI}
+    \textbf{h}_{1} & \textbf{h}_{2} & \textbf{h}_{3} & \dots  & \textbf{h}_{K}
 \end{bmatrix}
 \]
-The channel for user $\textit{k}$ is thus a row vector:
-\[
-\textbf{H}_k
-=
-\begin{bmatrix}
-    \textbf{H}_{k1} & \textbf{H}_{k2} & \textbf{H}_{k3} & \dots  & \textbf{H}_{kI}
-\end{bmatrix} \hspace{1cm}(k = 1,...,K)
-\]
-The received signal for the \textit{k}th user could be derived as:
-\[
-\textbf{y}_k = \textbf{H}_k\textbf{x}+\textbf{n}_k = \textbf{H}_{k1}\textbf{x} + \textbf{H}_{k2}\textbf{x} +
-\dots + \textbf{H}_{kI}\textbf{x} + \textbf{n}_k \hspace{1cm}(k = 1,...,K)
-\]
-Where \textbf{x} is the beamformed sequence from the base station antennas, $\textbf{H}_k$ is the channel matrix for the $\textit{k}$th user,
-$\textbf{n}_k$ is the additive white Gaussian noise (AWGN) for the $\textit{k}$th user, and $\textbf{y}_k$ to be the received signal for the $\textit{k}$th user.
-
-\subsection{Zero-Forcing Beam Former}
-The beam former is designed to eliminate the inter-user interference. It could be modelled as a matrix of size $\textit{I}*\textit{K}$
+\begin{center}
+and
+\end{center}
 \[
 \textbf{W}
 =
 \begin{bmatrix}
-    \textbf{W}_{11} & \textbf{W}_{12} & \textbf{W}_{13} & \dots  & \textbf{W}_{1K} \\
-    \textbf{W}_{21} & \textbf{W}_{22} & \textbf{W}_{23} & \dots  & \textbf{W}_{2K} \\
-    \vdots & \vdots & \vdots & \ddots & \vdots \\
-    \textbf{W}_{I1} & \textbf{W}_{I2} & \textbf{W}_{I3} & \dots  & \textbf{W}_{IK}
+    \textbf{w}_{1} & \textbf{w}_{2} & \textbf{w}_{3} & \dots  & \textbf{w}_{K}
 \end{bmatrix}
 \]
-The beamformer for each user becomes the colomn vector:
-\[
-\textbf{W}_k
-=
-\begin{bmatrix}
-    \textbf{W}_{1k} \\
-    \textbf{W}_{2k} \\
-    \vdots \\
-    \textbf{W}_{Ik}
-\end{bmatrix} \hspace{1cm}(k = 1,...,K)
-\]
-The processed signal sequence would thus be:
-\[
-\textbf{x} = \textbf{WS} = \textbf{W}_1\textbf{s}_1 + \textbf{W}_2\textbf{s}_2 + \dots +\textbf{W}_K\textbf{s}_K
-\]
-And the received signal for \textit{k}th user would be:
-\[
-\textbf{y}_k = \underbrace{\textbf{H}_k\textbf{W}_1\textbf{s}_1 +\textbf{H}_k\textbf{W}_2\textbf{s}_2+\textbf{H}_k\textbf{W}_3\textbf{s}_3
-+\dots}_{interference}+\overbrace{\textbf{H}_k\textbf{W}_k\textbf{s}_k}^{signal}+
-\underbrace{\dots+\textbf{H}_k\textbf{W}_K\textbf{s}_K}_{interference} +\underbrace{\textbf{n}_k}_{noise}
-\]
-\[
-\textit{k} = 1,2,\dots,\textit{K}
-\]
-The zero-forcing beamformer is designed to eliminate the inter-user interference completely,i.e.,to make the interference part in the received signal equal to 0.
-\[
-\textit{interference} = \sum_{k' = 1,k'\neq k}^{k' = K}\textbf{H}_k\textbf{W}_{k'}\textbf{s}_{k'} = 0
-\]
-As $\textbf{s}_{k'}$ is the signal sequence of user \textit{k'}, $\textbf{s}_{k'} \neq 0$, the following condition needs to be fulfilled to cancel out the interference:
-\[
-\textbf{H}_k\textbf{W}_{k'} = 0 \hspace{1cm}(k \neq k')
-\]
-From the pespective of the whole system serving \textit{K} users, the beamformer matrix should be designed to match the condition:
+To fulfill the requirement of the beamformer, the multiplication of matrices \textbf{H} and \textbf{W} should be equal to an identity matrix.
 \[
 \textbf{WH} = \textbf{I}
 \]
 where I is the identity matrix.
 
 \noindent
-Solving this condition, the zero-forcing beamformer \textbf{W} would be the pseudo-inverse of the channel matrix \textbf{H}:
+Solving this equation, the zero-forcing beamformer \textbf{W} would be the pseudo-inverse of the channel matrix \textbf{H}:
 \[
-\textbf{W} = \textbf{H}^{\dagger} = \textbf{H}^H(\textbf{H}\textbf{H}^H)^{-1}
+\textbf{W} = \textbf{H}^{\dagger} = (\textbf{H}^H\textbf{H})^{-1}\textbf{H}
 \]
+
 \subsection{Power Allocation}
 The original beamformer would have a power gain larger than 1 which make the signal power exceeding the maximum output of the transmission antennas.
-In this situation, the beamformer has to be rescaled to fulfill the power constraint.
-Two different rescale methods are applied to meet the power limitation while allocate different power to different users.
-The power constraint for each transmission antenna is set to be 1 for simplicity.
+In this situation, we would allocate specific power gain to each user and rescale the beamformers according to the power allocation.
 
-\subsubsection{Equal Power Scaling Allocation Scheme}
-In the normalized scheme, the beam former matrix is normalized by its Frobenius Norm:
-$$
-\textbf{W} = \frac{\textbf{W}}{norm(\textbf{W}, 'fro')}
-$$
-This normalization process would simply rescaled the whole matrix with a constant to fulfill the limitation.
-Power is equally allocated for each user.
+\noindent
+The power allocated to the \textit{k}th user is denoted as $p_k$ and the power constraint of a transmission antenna is set to be P:
+\[\sum_{k=1}^K p_k \leq P\]
+and the power-allocated beamformer for the \textit{k}th user could be expressed as:
+\[\textbf{w}_k = \frac{\textbf{w}_k\sqrt{p_k}}{\lVert \textbf{w}_k \rVert_{F}}\]
+Three different power allocation methods are practiced in this system:
+the Normalized Scheme, the Equal Power Scaling Scheme and the Water Filling Scheme.
+\subsubsection{Normalized Scheme}
+In the normalized scheme, the initial beam former matrix is normalized by its Frobenius Norm:
+\[
+\textbf{W} = \frac{\textbf{W}}{\lVert \textbf{W} \rVert_{F}}
+\]
+The power allocated to the \textit{k}th user would be:
+\[p_k = \frac{\lVert \textbf{w}_k \rVert_{F}^2}{\lVert \textbf{W} \rVert_{F}^2}\]
+This normalization process would simply rescale the whole matrix with a constant to fulfill the limitation.
+
+\subsubsection{Equal Power Scaling Scheme}
+In the equal power scaling scheme, a uniform power is allocated to each user.
+\[p_k = \frac{P}{K}\]
+and the beamformer for each user become:
+\[\textbf{w}_k = \frac{\textbf{w}_k\sqrt{P}}{\lVert \textbf{w}_k \rVert_{F}\sqrt{K}}\]
 \subsubsection{Water Filling Scheme}
 The water filling scheme is targeted to reach a maximum data rate for the whole group of users.
 The method would allocate more power to those with better channel state to boost their achievable rate while meeting the power constraint.
@@ -144,7 +162,17 @@ $$
 $$
 with the limitation of
 $$\sum_{n=1}^{N_U} p_n \leq 1$$
-Iterative division method is applied to find the value of $p$ to maximize the achievable rate.
+Water filling method is efficient in solving this condition.
+The water filling power is set to be $\mu$ and let the orignal beamformer gain to be $G_k$:
+\[g_k = \lVert \textbf{w}_k \rVert_{F}^2\]
+The maximization problem would be transformed to finding the maximum value of $\mu$ that satisfies:
+\[\sum_{k=1}^{K}(\mu-g_k)^+ \leq P\]
+where ${x}^+$ denotes max\{x,0\} \cite{TY1}.
+
+\noindent
+Therefore, the power allocated to the \textit{k}th user would be:
+\[p_k = (\frac{\mu}{g_k}-1)^+ \]
+Iterative division method is applied to find the value of $\mu$ to maximize the achievable rate.
 
 \subsection{Simulation Platform}
 The system diagram for the simulation platform is shown in figure 2.
@@ -157,25 +185,31 @@ The system diagram for the simulation platform is shown in figure 2.
 
 \noindent
 The channel matrix \textbf{H} is firstly generated randomly and the corresponding beamformer \textbf{W} is calculated.
-Additive white Gaussian noise is generated as a random vector $\textbf{n}_k$ for the \textit{k}th user with the noise power $\sigma^2$.
+Additive white Gaussian noise is generated as a random vector $\textbf{n}_k$ for the \textit{k}th user with the noise power $\sigma^2_k$.
 A data stream of a block length is simulated for each user for transmission.
 Signal-to-Interference-and-Noise-Ratio for each user is then calculated to determine the modulation and coding scheme.
 The SINR for the \textit{k}th user is:
 \[
-SINR_k = \frac{Signal}{Interference+Noise} = \frac{\textbf{H}_k\textbf{W}_kP_{sk}}{\sum_{k' = 1,k'\neq k}^{k' = K}\textbf{H}_k\textbf{W}_{k'}\textbf{s}_{k'}P_{sk'}+\sigma^2}
+SINR_k = \frac{Signal}{Interference+Noise} = \frac{\textbf{h}_k^H\textbf{w}_k}{\sum_{i = 1,i\neq k}^{i = K}\textbf{h}_k^H\textbf{w}_i+\sigma_k^2}
 \]
-where $P_{sk}$ is the power of signal $\textbf{s}_k$ and $P_{sk'}$ is the power of signal $\textbf{s}_k'$.
+where the $\textbf{w}_k$ is the beamformer for the \textit{k}th user with the power component multiplied.
 
 \noindent
 The SINR is converted into decimal scale and mapped to the corresponding CQI and MCS index values.
 $$SINR(dB)_k = 10*log_{10}(SINR)$$
-With the specific modulation and coding scheme, the data stream is converted into the signal sequence and simulation transmission is performed.
+With the specific modulation and coding scheme, a data stream of a block length is randomly generated for each user.
+All the data streams are converted into the signal sequences \textbf{s}
+and \textbf{s} for all users then pass through the beamformer and form the signal \textbf{x}.
 
 \noindent
-The decoded data stream at the user side would be compared to the original one for evaluation.
+Beamformed signal \textbf{x} would be simulated-transmitted via the channel and reach the user.
+The user side would decode, demodulate and detect the received signal.
+
+\noindent
+The decoded data stream at the user side would be directly compared to the original one for evaluation.
 
 
-\section{Performance Evaluation}
+\section{Performance Evaluation and Comparison}
 The detected data streams are compared to the original ones and check if there is any error. The blocks successfully transmitted are counted to the total throughput.
 \[ThroughPut_k = L_{Bl}N_{Bl}\]
 where $L_{Bl}$ is the block length of the specific modulation and coding scheme and the $N_{Bl}$ is the number of blocks which are transmitted correctly.
@@ -190,14 +224,17 @@ The performance of the system applying the two power allocation schemes is shown
 
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.45]{WFvsEPS.png}
-\caption{Water Filling vs EPS Comparison}
-\label{fig:MUSOvsSISO}
+\includegraphics[scale=0.45]{Comparison.png}
+\caption{Comparison Between the 3 Power Allocation Methods with Zero-Forcing MU-MISO System}
+\label{fig:Comparison}
 \end{figure}
 
 \noindent
-The waterfilling power allocation method performs better in the total through put with high noise power.
-The EPS method outperforms the waterfilling method when the noise power is low. This should be caused by the limitation of maximum transmit rate of the modulation and coding schemes.
+The waterfilling power allocation method performs better in the total throughput comparing to the other two algorithms.
+However, the increase in total throughput is traded with the loss of throughput for users with poor channel state.
+The EPS method outstands in equality for all user and has a relatively good performance comparing to the normalized method.
+When the channel for all users is quite good, the performance of both the EPS and waterfilling scheme would become quite similar.
+The normalization method would be the simplest in implementation. However, this advantage over the EPS scheme is nearly ignorable.
 
 \noindent
 The performance of the adaptive Single-Input-Single-Output(SISO) system is shown in figure 4. Comparing figure 3 and figure 4,
@@ -206,17 +243,21 @@ The performance of the adaptive Single-Input-Single-Output(SISO) system is shown
 \centering
 \includegraphics[scale=0.25]{FadingSISO.png}
 \caption{SISO Performance}
-\label{fig:WFvsEPS}
+\label{fig:SISO}
 \end{figure}
 
 
 \section{Conclusion}
-The multi-antenna communication system have a much better net through put performance than the single antenna system.
+The simulated Multi-User MISO system with Zero-Forcing beamforming performs far better in term of total throughput. Therefore it would be
+more suitable for the multi-user scenario, which becomes more and more common in the modern world.
 The multi-antenna technology would be replacing the SISO system in modern communication systems to achieve better performances for
 real-world multi-user scenarios.
 
 \noindent
-The water filling algorithm outperforms the EPS scheme in term of total throughput at high noise power but loses the advantage at low noise power.
-The failing of the water filling algorithm when the channel quality is good should be further researched and the algorithm should be
-improved to overcome the problem.
+The water filling algorithm outstands in term of total throughput but fails to keep quality for users with poor channel state.
+The EPS method would work well in good channel state and keep equality to all users when channel becomes poor.
+The Normalized scheme has a relatively poor performance comparing to the other two. The advantage in the simplicity is also small thus has little value in practice.
+
+\bibliographystyle{plain}
+\bibliography{references}{}
 \end{document}

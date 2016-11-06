@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.1)  3 NOV 2016 09:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.1)  6 NOV 2016 08:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -569,62 +569,74 @@ Package pdftex.def Info: Scenario.png used on input line 31.
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Scena
 rio.png>]
-[2]
-Overfull \hbox (17.34898pt too wide) in paragraph at lines 106--108
+Overfull \hbox (17.34898pt too wide) in paragraph at lines 92--94
 \OT1/cmr/m/n/10 The zero-forcing beam-former is de-signed to elim-i-nate the in
 ter-user in-ter-fer-ence com-pletely,i.e.,to
  []
 
-[3] <SystemDia.png, id=28, 832.10875pt x 465.74pt>
+[2] [3]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 170.
+
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 170.
+
+<SystemDia.png, id=28, 832.10875pt x 465.74pt>
 File: SystemDia.png Graphic file (type png)
  <use SystemDia.png>
-Package pdftex.def Info: SystemDia.png used on input line 153.
+Package pdftex.def Info: SystemDia.png used on input line 181.
 (pdftex.def)             Requested size: 416.05336pt x 232.86943pt.
 
-Overfull \hbox (18.56836pt too wide) in paragraph at lines 153--154
+Overfull \hbox (18.56836pt too wide) in paragraph at lines 181--182
  [][] 
  []
 
-[4 <./SystemDia.png>] <WFvsEPS.png, id=34, 721.19438pt x 434.37282pt>
-File: WFvsEPS.png Graphic file (type png)
+[4] [5 <./SystemDia.png>] <Comparison.png, id=37, 931.98187pt x 688.82344pt>
+File: Comparison.png Graphic file (type png)
 
-<use WFvsEPS.png>
-Package pdftex.def Info: WFvsEPS.png used on input line 193.
-(pdftex.def)             Requested size: 324.53447pt x 195.46596pt.
- [5 <./WFvsEPS.png (PNG copy)>]
+<use Comparison.png>
+Package pdftex.def Info: Comparison.png used on input line 227.
+(pdftex.def)             Requested size: 419.38797pt x 309.96768pt.
+
+Overfull \hbox (21.90297pt too wide) in paragraph at lines 227--228
+ [][] 
+ []
+
 <FadingSISO.png, id=38, 1124.2pt x 843.15pt>
 File: FadingSISO.png Graphic file (type png)
  <use FadingSISO.png>
-Package pdftex.def Info: FadingSISO.png used on input line 207.
+Package pdftex.def Info: FadingSISO.png used on input line 244.
 (pdftex.def)             Requested size: 281.04932pt x 210.78697pt.
- [6 <./FadingSISO.png (PNG copy)>] (./main.aux) ) 
+ [6 <./Comparison.png (PNG copy)>] (./main.bbl) [7 <./FadingSISO.png (PNG copy)
+>] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 2905 strings out of 493014
- 38332 string characters out of 6133351
- 116198 words of memory out of 5000000
- 6405 multiletter control sequences out of 15000+600000
+ 2927 strings out of 493014
+ 38694 string characters out of 6133351
+ 113201 words of memory out of 5000000
+ 6421 multiletter control sequences out of 15000+600000
  10686 words of font info for 38 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,10n,32p,251b,223s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2016/texmf
--dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2016/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2016/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2016/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (6 pages, 265769 bytes).
+ 38i,24n,32p,251b,223s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.p
+fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb>
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr
+/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on main.pdf (7 pages, 285875 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
+ 91 PDF objects out of 1000 (max. 8388607)
+ 61 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
