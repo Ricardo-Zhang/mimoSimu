@@ -2,8 +2,8 @@ clear;
 clc;
 %execute make.m first to compile c files.
 
-AttenTx = 3;
-UserNum = 3;
+AttenTx = 2;
+UserNum = 2;
 
 %--------------------------
 dBNoiPwr= -20:1:10;      %SNR range, in dB; the definition of SNR is symbol power divided by noise power
@@ -32,7 +32,10 @@ t1=clock;
 for ntrials = 1:Ntrials    
     %Channel and Beamformer Init
     H = sqrt(1/2)*(randn(UserNum, AttenTx) + 1i*randn(UserNum, AttenTx)); % channel model, noiseless
-    W = H'*inv(H*H');
+    W = pinv(H);
+    for user = 1:UserNum
+        W(:,user) = W(:,user)/norm(W(:,user),'fro');
+    end   
     %Power Allocation ----------------------
     W = PowerAllo(UserNum,W,'WaterFilling');
     for nNoise = 1:length(dBNoiPwr)

@@ -2,16 +2,14 @@ function W = PowerAllo(UserNum,W,AlloType)
 switch(AlloType)
     case 'WaterFilling'
         P = zeros(1,UserNum);           %initial power allocation for all users
-        Pwf = UserNum;             %initial water filling power level
-        Pwf1 = UserNum;
+        Pwf = 10;             %initial water filling power level
+        Pwf1 = 100;
         Pwf0 = 0;
         for cycle = 1:1000
             for user = 1:UserNum
-                yi = 1/(norm(W(:,user),'fro'));
-                P(user) = max(Pwf*yi - 1,0);
-                Pn(user) = P(user)/yi;
+                P(user) = max(Pwf - 1,0);
             end
-            if sum(Pn) > 1
+            if sum(P) > 1
                 Pwf1 = Pwf;
                 Pwf = (Pwf0+Pwf)/2;
             else
@@ -20,16 +18,10 @@ switch(AlloType)
             end
         end
         for user = 1:UserNum
-            W(:,user) = W(:,user)/norm(W(:,user),'fro');    
             W(:,user) = W(:,user)*sqrt(P(user));
         end        
-        P
     case 'EPS'
         for user = 1:UserNum
-            W(:,user) = W(:,user)/norm(W(:,user),'fro');
             W(:,user) = W(:,user)/sqrt(UserNum);
-        end
-    case 'Regularized'
-        W = W / norm(W,'fro');
-    end       
+        end   
 end
