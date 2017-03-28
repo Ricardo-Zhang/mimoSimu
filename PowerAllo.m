@@ -18,7 +18,7 @@ switch(AlloType)
             end
         end
         for user = 1:UserNum
-            W(:,user) = W(:,user)*sqrt(P(user));
+            W(:,user) = W(:,user)/norm(W(:,user))*sqrt(P(user));
         end        
     case 'EPS'
         for user = 1:UserNum

@@ -39,7 +39,7 @@ for ntrials = 1:Ntrials
         
         %Channel Init----------------------
         v =(randn(T,UserNum)+1i*randn(T,UserNum))/sqrt(2);   % noise
-        W = H'*inv(H*H');
+        W = H'*inv(H*H'+UserNum*eye(UserNum,AnttenTX));
         W = W / sqrt(trace(W*W'));
         Signal = TransmitInit(UserNum, H, W, NoiPwr(nNoise), LTEParams, Tn, T);
         

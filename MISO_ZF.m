@@ -33,9 +33,9 @@ for ntrials = 1:Ntrials
     %Channel and Beamformer Init
     H = sqrt(1/2)*(randn(UserNum, AttenTx) + 1i*randn(UserNum, AttenTx)); % channel model, noiseless
     W = pinv(H);
-    for user = 1:UserNum
-        W(:,user) = W(:,user)/norm(W(:,user),'fro');
-    end   
+    %for user = 1:UserNum
+     %   W(:,user) = W(:,user)/norm(W(:,user),'fro');
+    %end   
     %Power Allocation ----------------------
     W = PowerAllo(UserNum,W,'WaterFilling');
     for nNoise = 1:length(dBNoiPwr)
