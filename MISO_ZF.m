@@ -2,8 +2,8 @@ clear;
 clc;
 %execute make.m first to compile c files.
 
-AttenTx = 3;
-UserNum = 3;
+AttenTx = 2;
+UserNum = 2;
 
 %--------------------------
 dBNoiPwr= -20:1:10;      %SNR range, in dB; the definition of SNR is symbol power divided by noise power
@@ -30,17 +30,24 @@ wb= waitbar(0);
 t1=clock;
 
 for ntrials = 1:Ntrials    
+    %Channel and Beamformer Init
     H = sqrt(1/2)*(randn(UserNum, AttenTx) + 1i*randn(UserNum, AttenTx)); % channel model, noiseless
+    W = pinv(H);
+    %for user = 1:UserNum
+     %   W(:,user) = W(:,user)/norm(W(:,user),'fro');
+    %end   
+    %Power Allocation ----------------------
+    W = PowerAllo(UserNum,W,'WaterFilling');
     for nNoise = 1:length(dBNoiPwr)
         %Wait Bar Update-----------------
         waitbar((length(dBNoiPwr)*(ntrials-1)+nNoise)/(Ntrials*length(dBNoiPwr)),wb);
         
         LTEParams=GetLTEParameters;     %get LTE parameters;
         
-        %Channel Init----------------------
+        %Noise Init----------------------
         v =(randn(T,UserNum)+1i*randn(T,UserNum))/sqrt(2);   % noise
-        W = H'*inv(H*H');
-        W = W / sqrt(trace(W*W'));
+      
+        %Coding and modulation---------------------
         Signal = TransmitInit(UserNum, H, W, NoiPwr(nNoise), LTEParams, Tn, T);
         
         %ZF-Precoding-----------------------

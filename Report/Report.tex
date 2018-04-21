@@ -1,0 +1,767 @@
+
+%% bare_jrnl_comsoc.tex
+%% V1.4b
+%% 2015/08/26
+%% by Michael Shell
+%% see http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.8b or later) with an IEEE
+%% Communications Society journal paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/pkg/ieeetran
+%% and
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE!
+%% User assumes all risk.
+%% In no event shall the IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%*************************************************************************
+
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. The IEEE's font choices and paper sizes can   ***
+% *** trigger bugs that do not appear when using other class files.       ***                          ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+
+
+\documentclass[journal,comsoc]{IEEEtran}
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[journal,comsoc]{../sty/IEEEtran}
+
+
+\usepackage[T1]{fontenc}% optional T1 font encoding
+
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/pkg/ifpdf
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+
+
+
+
+
+% *** CITATION PACKAGES ***
+%
+\usepackage{cite}
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of the IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off
+% such as if a citation ever needs to be enclosed in parenthesis.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 5.0 (2009-03-20) and later if using hyperref.sty.
+% The latest version can be obtained at:
+% http://www.ctan.org/pkg/cite
+% The documentation is contained in the cite.sty file itself.
+
+
+
+
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at:
+% http://www.ctan.org/pkg/graphicx
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/pkg/epslatex
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). The IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{atbegshi}% http://ctan.org/pkg/atbegshi
+\AtBeginDocument{\AtBeginShipoutNext{\AtBeginShipoutDiscard}}
+
+
+% *** MATH PACKAGES ***
+%
+\usepackage{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics.
+% Do NOT use the amsbsy package under comsoc mode as that feature is
+% already built into the Times Math font (newtxmath, mathtime, etc.).
+%
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/pkg/amsmath
+
+
+% Select a Times math font under comsoc mode or else one will automatically
+% be selected for you at the document start. This is required as Communications
+% Society journals use a Times, not Computer Modern, math font.
+\usepackage[cmintegrals]{newtxmath}
+% The freely available newtxmath package was written by Michael Sharpe and
+% provides a feature rich Times math font. The cmintegrals option, which is
+% the default under IEEEtran, is needed to get the correct style integral
+% symbols used in Communications Society journals. Version 1.451, July 28,
+% 2015 or later is recommended. Also, do *not* load the newtxtext.sty package
+% as doing so would alter the main text font.
+% http://www.ctan.org/pkg/newtx
+%
+% Alternatively, you can use the MathTime commercial fonts if you have them
+% installed on your system:
+%\usepackage{mtpro2}
+%\usepackage{mt11p}
+%\usepackage{mathtime}
+
+
+%\usepackage{bm}
+% The bm.sty package was written by David Carlisle and Frank Mittelbach.
+% This package provides a \bm{} to produce bold math symbols.
+% http://www.ctan.org/pkg/bm
+
+
+
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as the IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/pkg/algorithms
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/pkg/algorithmicx
+
+
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/pkg/array
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\ifCLASSOPTIONcompsoc
+%  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+%\else
+%  \usepackage[caption=false,font=footnotesize]{subfig}
+%\fi
+% subfig.sty, written by Steven Douglas Cochran, is the modern replacement
+% for subfigure.sty, the latter of which is no longer maintained and is
+% incompatible with some LaTeX packages including fixltx2e. However,
+% subfig.sty requires and automatically loads Axel Sommerfeldt's caption.sty
+% which will override IEEEtran.cls' handling of captions and this will result
+% in non-IEEE style figure/table captions. To prevent this problem, be sure
+% and invoke subfig.sty's "caption=false" package option (available since
+% subfig.sty version 1.3, 2005/06/28) as this is will preserve IEEEtran.cls
+% handling of captions.
+% Note that the Computer Society format requires a larger sans serif font
+% than the serif footnote size font used in traditional IEEE formatting
+% and thus the need to invoke different subfig.sty package options depending
+% on whether compsoc mode has been enabled.
+%
+% The latest version and documentation of subfig.sty can be obtained at:
+% http://www.ctan.org/pkg/subfig
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure.
+% Be aware that LaTeX2e kernels dated 2015 and later have fixltx2e.sty's
+% corrections already built into the system in which case a warning will
+% be issued if an attempt is made to load fixltx2e.sty as it is no longer
+% needed.
+% The latest version and documentation can be found at:
+% http://www.ctan.org/pkg/fixltx2e
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/pkg/stfloats
+% Do not use the stfloats baselinefloat ability as the IEEE does not allow
+% \baselineskip to stretch. Authors submitting work to the IEEE should note
+% that the IEEE rarely uses double column equations and that authors should try
+% to avoid such use. Do not be tempted to use the cuted.sty or midfloat.sty
+% packages (also by Sigitas Tolusis) as the IEEE does not format its papers in
+% such ways.
+% Do not attempt to use stfloats with fixltx2e as they are incompatible.
+% Instead, use Morten Hogholm'a dblfloatfix which combines the features
+% of both fixltx2e and stfloats:
+%
+% \usepackage{dblfloatfix}
+% The latest version can be found at:
+% http://www.ctan.org/pkg/dblfloatfix
+
+
+
+
+%\ifCLASSOPTIONcaptionsoff
+%  \usepackage[nomarkers]{endfloat}
+% \let\MYoriglatexcaption\caption
+% \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
+%\fi
+% endfloat.sty was written by James Darrell McCauley, Jeff Goldberg and
+% Axel Sommerfeldt. This package may be useful when used in conjunction with
+% IEEEtran.cls'  captionsoff option. Some IEEE journals/societies require that
+% submissions have lists of figures/tables at the end of the paper and that
+% figures/tables without any captions are placed on a page by themselves at
+% the end of the document. If needed, the draftcls IEEEtran class option or
+% \CLASSINPUTbaselinestretch interface can be used to increase the line
+% spacing as well. Be sure and use the nomarkers option of endfloat to
+% prevent endfloat from "marking" where the figures would have been placed
+% in the text. The two hack lines of code above are a slight modification of
+% that suggested by in the endfloat docs (section 8.4.1) to ensure that
+% the full captions always appear in the list of figures/tables - even if
+% the user used the short optional argument of \caption[]{}.
+% IEEE papers do not typically make use of \caption[]'s optional argument,
+% so this should not be an issue. A similar trick can be used to disable
+% captions of packages such as subfig.sty that lack options to turn off
+% the subcaptions:
+% For subfig.sty:
+% \let\MYorigsubfloat\subfloat
+% \renewcommand{\subfloat}[2][\relax]{\MYorigsubfloat[]{#2}}
+% However, the above trick will not work if both optional arguments of
+% the \subfloat command are used. Furthermore, there needs to be a
+% description of each subfigure *somewhere* and endfloat does not add
+% subfigure captions to its list of figures. Thus, the best approach is to
+% avoid the use of subfigure captions (many IEEE journals avoid them anyway)
+% and instead reference/explain all the subfigures within the main caption.
+% The latest version of endfloat.sty and its documentation can obtained at:
+% http://www.ctan.org/pkg/endfloat
+%
+% The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
+% later in the document, say, to conditionally put the References on a
+% page by themselves.
+
+
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version and documentation can be obtained at:
+% http://www.ctan.org/pkg/url
+% Basically, \url{my_url_here}.
+
+
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+\begin{document}
+\pagenumbering{gobble}% Remove page numbers (and reset to 1)
+
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+\title{Multi-User-MISO Simulation System Design Using the Zero-Forcing Beamforming}
+%
+%
+% author names and IEEE memberships
+% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
+% a structure at a ~ so this keeps an author's name from being broken across
+% two lines.
+% use \thanks{} to gain access to the first footnote area
+% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
+% was not built to handle multiple paragraphs
+%
+
+\author{Zhang Zhan}% <-this % stops a space
+\thanks{Zhang Zhan is with the Department
+of Electronic Engineering, the Chinese University of Hong Kong, e-mail: zhangzhan1104@gmail.com .}% <-this % stops a space
+
+% make the title area
+\maketitle
+
+% As a general rule, do not put math, special symbols or citations
+% in the abstract or keywords.
+\begin{abstract}
+  Multiple antenna technologies have been widely used in the modern communication system standards to achieve larger capacity.
+  Thus software simulation platforms for the multi-antenna communication systems have received much attention.
+  This report introduces the design of a simulation platform for the multi-user multi-input-multi-output (MU-MISO) communication system.
+  Zero-Forcing beamforming is implemented to eliminate the inter-user interference and two different power allocation algorithms are employed.
+  Performance evaluation is performed based on the platform and comparison between the MU-MISO system and the traditional SISO system is conducted.
+\end{abstract}
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+Multiple-Input-Single-Output, Software Simulation, Zero-Forcing Beamforming.
+\end{IEEEkeywords}
+
+
+
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+
+\section{Introduction}
+
+% The very first letter is a 2 line initial drop letter followed
+% by the rest of the first word in caps.
+%
+% form to use if the first word consists of a single letter:
+% \IEEEPARstart{A}{demo} file is ....
+%
+% form to use if you need the single drop letter followed by
+% normal text (unknown if ever used by the IEEE):
+% \IEEEPARstart{A}{}demo file is ....
+%
+% Some journals put the first two words in caps:
+% \IEEEPARstart{T}{his demo} file is ....
+%
+% Here we have the typical use of a "T" for an initial drop letter
+% and "HIS" in caps to complete the first word.
+
+\IEEEPARstart
+\section{System Model}
+
+
+\subsection{Non-Adaptive Single-Input-Single-Output System}
+
+The system simulates the transmission of a single LTE slot in each trial and performed simulation in a large scale to see the overall performance.
+The system practices various modulation and coding scheme corresponding to different CQI to find out the best scheme based on different given SNR values.
+
+\begin{table}[h!]
+\centering
+\caption{Basic Features of the Non-adaptive SISO System}
+\label{my-label}
+\begin{tabular}{rl}
+
+Channel Bandwidth                               & 1.4 MHz                              \\
+Channel Type                                    & Additive White Gaussian Noise        \\
+Signal to Noise Ratio                           & -10dB to 20dB, 0.5dB step         \\
+Resource Blocks Per Slot                      & 6                                    \\
+Subcarriers Per Resource Block       & 12                                   \\
+OFDM Symbols Per Subcarrier          & 14
+\end{tabular}
+\end{table}
+
+Determining the relationship between different MCS and CQI values is the first step to achieve the final mapping between the three factors. According to [3], both MCS and CQI have already got the type of modulation scheme fixed in their standards which already led to a rough relationship in between. However, to establish the precise one-to-one mapping relationship, the code rate for each MCS value is to be calculated and compared to the code rate of each CQI value prescribed by the 3GPP Standard.
+
+The code rate from the MCS scheme:
+
+\[CodeRate = \frac{N_{InfoBits}}{N_{rb} * N_{Symbol} * Bits_{PerSymbol}}\]
+
+\begin{itemize}
+  \item \(N_{rb}\) : the number of resource blocks in a transmission slot (fixed to be 6 in this case)
+  \item \(N_{InfoBits}\) : the length of the information bits in the whole block determined by the MCS and \(N_{rb}\)
+  \item \(N_{Symbol}\) : the number of OFDM symbols in a resource block (fixed to be 7)
+  \item \(Bits_{PerSymbol}\) : the modulation order determined by the modulation scheme
+\end{itemize}
+
+With the calculated MCS code rates and the CQI 3GPP standard, the mapping relationship between CQI and MCS values is established. The MCS is mapped to the CQI that shares the same modulation scheme and the most closing code rate while not exceeding it. The one-to-one relationship is shown in table 2. The modulation scheme and the code rate from the CQI standard is also provided in the table.
+\begin{table}[!h]
+\centering
+\caption{Relationship between the CQI and MCS}
+\label{my-label}
+\begin{tabular}{ cccc }
+\hline
+  CQI & MCS & Modulation Scheme & Approximate Code Rate \\ \hline
+  0* & NAN & NAN & NAN \\ \hline
+  1 & 0 & QPSK & 0.076 \\ \hline
+  2 & 1 & QPSK & 0.12 \\ \hline
+  3 & 2 & QPSK & 0.19 \\ \hline
+  4 & 4 & QPSK & 0.3 \\ \hline
+  5 & 7 & QPSK & 0.44 \\ \hline
+  6 & 9 & QPSK & 0.59 \\ \hline
+  7 & 12 & 16-QAM & 0.37 \\ \hline
+  8 & 14 & 16-QAM & 0.48 \\ \hline
+  9 & 16 & 16-QAM & 0.6 \\ \hline
+  10 & 19 & 64-QAM & 0.45 \\ \hline
+  11 & 21 & 64-QAM & 0.55 \\ \hline
+  12 & 23 & 64-QAM & 0.65 \\ \hline
+  13 & 25 & 64-QAM & 0.75 \\ \hline
+  14 & 27 & 64-QAM & 0.85 \\ \hline
+  15 & 28 & 64-QAM & 0.93 \\ \hline
+\end{tabular}
+\begin{itemize}
+  \item
+  \item *When CQI is 0, no transmission shall be achieved, thus no corresponding MCS/code rate applicable.
+\end{itemize}
+\end{table}
+
+
+
+
+
+Random signal of the block length is generated, modulated and coded to form the real signal for transmission. The signal then passes an Addictive White Gaussian Noise (AWGN) channel of given SNR to the receiver.
+
+The received signal is:
+\[y=h*s+\frac{1}{\sqrt{SNR}}v \]
+
+\begin{itemize}
+  \item h : the channel, set to be 1 as pure AWGN channel is used;
+  \item s : the modulated and coded signal for transmission;
+  \item v : the random noise vector added to the signal and h is set to be 1 in the AWGN channel.
+\end{itemize}
+The received signal then passed through the symbol detector and the turbo decoder producing the decoded data stream.
+
+The decoded bit stream is then compared to the original signal and see whether there are errors in this process. If errors are spotted, the whole block would be considered to be a failure. All failures are counted, calculating the BLER for each CQI value. In this research, 10000 trials were performed and a reliable outcome of simulated BLERs is generated. The outcome of the BLER for all the CQI values relating to various SNR is displayed in the figure 1.
+\begin{figure}[!h]
+    \centering
+    \captionsetup{justification=centering}
+    \label{fig_parabola}
+	\includegraphics[width=0.5\textwidth]{images}
+	\centering
+	\caption{BLER Outcome Curves from SISO Simulation for all 15 CQI Values
+From CQI 1(leftmost) to CQI 15 (rightmost)}
+\end{figure}
+
+In the industrial practice, a BLER of less than 0.1 is usually considered as acceptable. The acceptable crossing points of the curves and the 0.1 BLER axis could be easily obtained from the figure 1 and the values are plotted in figure 2. The final relationship between the SNR, CQI and MCS is determined correspondingly and shown in table 3.
+\begin{figure}[!h]
+    \centering
+    \captionsetup{justification=centering}
+    \label{fig_parabola}
+	\includegraphics[width=0.5\textwidth]{SNRCQI}
+	\centering
+	\caption{Points Achieving 10\% BLER}
+\end{figure}
+
+\begin{table}[!h]
+\centering
+\caption{CQI SNR AND MCS MAPPING}
+\label{my-label}
+\begin{tabular}{crc}
+\hline
+CQI & SNR & MCS\\
+\hline
+1 & ($\infty$,-5.1) & 0 \\
+2 & [-5.1,-4.4) & 1\\
+3 & [-4.4,-2.5) & 2\\
+4 & [-2.5,-0.2) & 4\\
+5 & [-0.2,1.4) & 7\\
+6 & [1.4,3.3) & 9\\
+7 & [3.3,5.1) & 12\\
+8 & [5.1,6.2) & 14\\
+9 & [6.2,8.5) & 16\\
+10 & [8.5,10.2) & 19\\
+11 & [10.2,11.6) & 21\\
+12 & [11.6,13.4) & 23\\
+13 & [13.4,14.3) & 25\\
+14 & [14.3,16.6) & 27\\
+15 & [16.6,$\infty$) & 28\\
+\hline
+\end{tabular}
+\end{table}
+
+The throughput of each CQI value is calculated from the simulation outcome:
+\[ThroughPut = \frac{(1-BLER) * Blocklength}{T_{frame}} \]
+The theoretical maximum channel capacity is also calculated according to the Shannon’s formula with minor system losses considered. The two outcomes are compared with each other to evaluate the efficiency of the whole system.
+
+The theoretical capacity is calculated as:
+\[Capacity= F * B * log_2(1 + SNR)\]
+\begin{itemize}
+  \item B : the occupied channel bandwidth  \[B = N_{rb} * N_{Sub} * 15KHz = 1.08MHz\]
+  \begin{itemize}
+  \item \(N_{Sub}\) : the number of subcarriers in a resource block, fixed to be 12;
+  \item Bandwidth occupied is 15KHz for each subcarrier;
+  \end{itemize}
+  \item F : system loss occured in transmission
+  \[F = \frac{T_{Frame}-T_{cp}}{T_{Frame}}*\frac{N_{Symbol}*N_{Sub}/2-4}{N_{Symbol}*N_{Sub}/2}\]
+  \begin{itemize}
+  \item \(T_{Frame}\) : the time of a frame, fixed to be 10ms;
+  \item \(T_{cp}\) : the time of the cyclic prefix (CP), fixed to be 4.7$\mu s$ for normal CP;
+  \end{itemize}
+\end{itemize}
+The comparison between the theoretical capacity and the simulated throughput outcome is displayed in figure 3.
+\begin{figure}[!h]
+    \centering
+    \captionsetup{justification=centering}
+    \label{fig_parabola}
+	\includegraphics[width=0.5\textwidth]{SISO}
+	\centering
+	\caption{Through Put Outcome Curves from SISO Simulation for all 15 CQI Values
+From CQI 1(leftmost) to CQI 15 (rightmost)}
+\end{figure}
+
+From figure 3, the throughput for each CQI curve is only satisfied in a limited interval of SNR. For values outside the small interval, the performance failed to approach the theoretical capacity and the system become quite inefficient under these conditions. Therefore, the need for deploying the adaptive modulation and coding schemes arises in the practical communication system.
+
+
+
+\subsection{Link Adaptive Single-Input-Single-Output System}
+To achieve a satisfying throughput performance throughout various channel SNR, adaptive modulation and coding method is integrated into the traditional SISO system.
+
+The SNR interval to MCS mapping relationship has been obtained in the former non-adaptive SISO simulation (shown in table 3). The system is therefore advanced to apply different modulation and coding scheme based on the channel SNR state. In this situation, the system is able to combine the well-performing intervals of different MCSs thus maximizing the data throughput.
+
+The system was evaluated by the final throughput and 10000 trials were performed to guarantee a convincing outcome. Both the simulated throughput curve and the calculated theoretical capacity is shown in Figure 4.
+\begin{figure}[!h]
+    \centering
+    \captionsetup{justification=centering}
+    \label{fig_parabola}
+	\includegraphics[width=0.5\textwidth]{ThroughPutAdaptive}
+	\centering
+	\caption{Through Put Outcome Curve for Adaptive SISO Simulation}
+\end{figure}
+
+In the comparison of the two curves displayed in figure 4, the simulated throughput curve remains closed to the theoretical capacity throughout different SNR values. The overall performance of the adaptive SISO communication system is well improved to achieve a good data rate in various channel states.
+\section{Adaptive Multiple-User Multiple-Input-Single-Output System}
+Since the performance of a SISO system is reaching its bottle-neck after the adaptive SISO system is widely deployed, people turned to communication systems consists of multiple antennas for further improvement.
+
+In this research, only Multiple-User Multiple-Input- Single-Output with the Zero-Forcing beam former is studied due to time and resource limitation. The scenario of two transmitting antennas with two users each having 1 receiving antenna are mainly simulated and discussed. Since the SNR is not precisely determined in multiple antenna communication systems, noise power is applied to see the performance variation with the change in the channel quality.
+
+The system is developed from the former adaptive SISO platform with each signal performing the adaptive modulation and coding for transmission.
+However, different from the simple AWGN channel for the SISO system, the channel system is formed by two vector type channels for the two users since multiple antennas are employed.
+\begin{center}
+\(\textbf{h1} = \left| \begin{array}{c}
+h_{11} \\
+h_{12} \\
+\end{array} \right|.\)
+and \(\textbf{h2} = \left| \begin{array}{c}
+h_{21} \\
+h_{22} \\
+\end{array} \right|.\)
+\end{center}
+In the practical simulation, the channel is generated as a random 2x2 matrix from the two transmission antenna to the two users.
+\[ \textbf{H} = \left| \begin{array}{cc}
+\textbf{h}_{1} & \textbf{h}_{2}
+\end{array} \right|.\]
+The zero forcing beam former is then determined by the channel matrix:
+\[\textbf{W} = \frac{1}{\textbf{H}}\]
+The beam former is normalized to regain the practical power level of the signal for transmission.
+\[\textbf{W} = \frac{\textbf{W}}{\left|\left|\textbf{W}\right|\right|_F}\]
+
+ Two independent data stream are generated for the two users. Adaptive modulation and channel coding scheme is determined according to the signal-to-interference-plus-noise ratio (SINR). The SINRs could be calculated by
+ \[SINR_1 = \frac{\textbf{h}_1^H\textbf{w}_1\textbf{w}_1^H\textbf{h}_1}{\textbf{h}_1^H\textbf{w}_2\textbf{w}_2^H\textbf{h}_1+NoisePower}\]
+ \[SINR_2 = \frac{\textbf{h}_2^H\textbf{w}_2\textbf{w}_2^H\textbf{h}_2}{\textbf{h}_2^H\textbf{w}_1\textbf{w}_1^H\textbf{h}_2+NoisePower}\]
+The MCS is then determined according to the mapping relationship applied in the adaptive SISO system. The two data streams are then modulated and coded into two transmission signals, \(s_1\) and \(s_2\).
+
+The transmission signals and the beam former were multiplied to form the real transmission signal through the channel:
+
+\[\textbf{X} = \left| \begin{array}{cc}
+\textbf{w}_1 & \textbf{w}_2\\
+\end{array} \right|*\left| \begin{array}{c}
+\textbf{s}_1 \\
+\textbf{s}_2 \\
+\end{array} \right|\]
+After passing the channel, the received signals for the two users would be:
+\[\textbf{y}_1 = \textbf{h}_1^H * \textbf{w}_1 *\textbf{s}_1 + \textbf{h}_1^H * \textbf{w}_2*\textbf{s}_2 +\textbf{n}_1\]
+\[\textbf{y}_2 = \textbf{h}_2^H * \textbf{w}_1 *\textbf{s}_1 + \textbf{h}_2^H * \textbf{w}_2*\textbf{s}_2 +\textbf{n}_2\]
+\begin{itemize}
+\item n1 and n2 : random white gaussian noises for the signals reaching the two users with the pre-given noise power
+\end{itemize}
+Because of the the ZF beam former W, the inter-user-interference is totally eliminated out(both the \(\textbf{h}_1^H * \textbf{w}_2\) and \(\textbf{h}_2^H * \textbf{w}_1\) equal to 0), the received signal could be then considered as
+\[\textbf{y}_1 = \textbf{h}_1^H * \textbf{w}_1 *\textbf{s}_1 + \textbf{n}_1\]
+\[\textbf{y}_2 = \textbf{h}_2^H * \textbf{w}_1 *\textbf{s}_1 + \textbf{n}_2\]
+and decoded in the same way as a SISO communication system.
+The total throughput for the both users is counted to evaluate the overall performance of the system.
+
+At the same time, the theoretical capacity is also calculated as the reference for comparison:
+\[Capacity= F * B * [log_2(1 + SINR_1)+log_2(1 + SINR_2)]\]
+The curve for the total throughput and the theoretical capacity is displayed in figure 5.
+\begin{figure}[!h]
+    \centering
+    \captionsetup{justification=centering}
+    \label{fig_parabola}
+	\includegraphics[width=0.5\textwidth]{MISO}
+	\centering
+	\caption{Through Put Outcome Curve for Adaptive MU-MISO Simulation}
+\end{figure}
+
+From the figure 5, the gap between the simulated curve and the theoretical is considerably large. However, one thing to notice is that the SISO simulations are based on pure AWGN channels without any distortion while the MISO system is simulated on a fading channel basis. In that case, the outcome is not that comparable to the former SISO simulations.
+
+\section{Conclusion}
+From the simulation outcomes of the three cellular communication systems, the non-adaptive SISO is far outperformed by the other two types only having a relatively satisfied performance in a limited situation. The adaptive SISO system merges the advantage intervals of different modulation and coding schemes thus achieving a better performance. The MU-MISO system with the ZF beam former produces an acceptable outcome in the simulation since the channel state is more complex comparing to the AWGN channels applied in the SISO systems.
+
+In the future, more advanced beam forming technologies should be further researched and implemented pursuing better throughput outcome. Multiple-Input-Multiple-Output system should also be studied and integrated into the simulation platform to achieve outstanding performance.
+
+% use section* for acknowledgment
+\section*{Acknowledgment}
+
+
+The author hereby would like to thank Professor Wing-Kin (Ken) Ma for his kind supervision in the research. The supervision helped greatly in determining the research route and advancing the progress.
+The help from Mr. Mingjie Shao is also highly acknowledged for the help and guidence provided.
+
+The fund support from the Faculty of Engineering, the Chinese University of Hong Kong is well acknowledged.
+
+
+% Can use something like this to put references on a page
+% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://mirror.ctan.org/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+\begin{thebibliography}{1}
+
+\bibitem{IEEEhowto:kopka}
+Erich Zochmann, Stefan Schwarz, Stefan Pratschner, Lukas Nagel, Martin Lerch and Markus Rupp. \emph{in EURASIP Journal on Wireless Communications and Networking 2016, no. 1 (2016): 1.} Exploring the physical layer frontier of cellular uplink,\hskip 1em plus
+  0.5em minus 0.4em\relax Open Access, 2016.
+\bibitem{IEEEhowto:kopka}
+Mehlführer, Christian, Martin Wrulich, Josep Colom Ikuno, Dagmar Bosanska, and Markus Rupp.\emph{In Signal Processing Conference, 2009 17th European.} Simulating the long term evolution physical layer,\hskip 1em plus
+  0.5em minus 0.4em\relax   IEEE, 2009, pp. 1471-1478.
+\bibitem{IEEEhowto:kopka}
+Brian Classon, Ajit Nimbalker, Stefania Sesia and Issam Toufik.\emph{In The UMTS Long Term Evolution From Theory to Practice, 2nd Edition} Link Adaption and Channel Coding,\hskip 1em plus
+  0.5em minus 0.4em\relax John Wiley \& Sons, United Kingdom, 2011, pp. 215-248.
+\end{thebibliography}
+
+% biography section
+%
+% If you have an EPS/PDF photo (graphicx package needed) extra braces are
+% needed around the contents of the optional argument to biography to prevent
+% the LaTeX parser from getting confused when it sees the complicated
+% \includegraphics command within an optional argument. (You could create
+% your own custom macro containing the \includegraphics command to make things
+% simpler here.)
+%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
+% or if you just want to reserve a space for a photo:
+
+
+% that's all folks
+\end{document}

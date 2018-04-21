@@ -41,7 +41,7 @@ for nSNR = 1:length(SNR)
   NumCodedBits=T*MCS_params.modulation_order;
 
   for ntrials=1:Ntrials
-      h=sqrt(1/2)*(randn + 1i*randn);        %set the channel as 1
+      h=1;        %set the channel as 1
 
       waitbar((Ntrials*(nSNR-1)+ntrials)/(Ntrials*length(SNR)),wb);
 
